@@ -1,0 +1,20 @@
+{
+  "name": "angular-node-realworld-example-app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "docker compose --env-file .env -f 'docker-compose.yml' up -d --build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idembele70/angular-node-realworld-example-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/idembele70/angular-node-realworld-example-app/issues"
+  },
+  "homepage": "https://github.com/idembele70/angular-node-realworld-example-app#readme",
+  "description": ""
+}

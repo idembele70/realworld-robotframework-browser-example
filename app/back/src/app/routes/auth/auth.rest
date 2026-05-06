@@ -1,0 +1,14 @@
+POST http://localhost:3000/api/users HTTP/1.1
+Content-Type: application/json
+
+{
+  "user": {
+    "email": "toto@mail.fr",
+    "username": "toto",
+    "password": "P@ssword!?"
+  }
+}
+
+### DELETE THE ACCOUNT
+DELETE http://localhost:3000/api/user HTTP/1.1
+Authorization: Token eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyM30sImlhdCI6MTc2OTAwNDM0NCwiZXhwIjoxNzc0MTg4MzQ0fQ.jmCLX5XZoG4rBXCpeah0aBad8EKiicnpxRsXPAp9Skc

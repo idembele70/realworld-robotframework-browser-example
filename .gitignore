@@ -1,0 +1,41 @@
+*/node_modules
+*/**/.env*
+
+# See http:/help.github.com/ignore-files/ for more about ignoring files.
+./back/
+# compiled output
+./back/dist
+./back/tmp
+./back/out-tsc
+
+# IDEs and editors
+./back/.idea
+./back/.project
+./back/.classpath
+./back/.c9/
+./back/*.launch
+./back/.settings/
+./back/*.sublime-workspace
+
+# IDE - VSCode
+./back/.vscode/extensions.json
+./back/!.vscode/settings.json
+./back/!.vscode/tasks.json
+./back/!.vscode/launch.json
+./back/!.vscode/extensions.json
+
+# misc
+./back/.sass-cache
+./back/connect.lock
+./back/coverage
+./back/libpeerconnection.log
+./back/npm-debug.log
+./back/yarn-error.log
+./back/testem.log
+./back/typings
+
+# System Files
+./back/.DS_Store
+./back/Thumbs.db
+
+./back/.nx/cache
