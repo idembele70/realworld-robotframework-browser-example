@@ -1,5 +1,5 @@
 *** Settings ***
-Library    String
+Library     String
 Library     Browser
 Library     RequestsLibrary
 Resource    ${CURDIR}/../../config/env_config.robot
@@ -12,36 +12,35 @@ ${REGISTER_PATH}            register
 
 # LOCATORS
 ${SIGN_UP_BUTTON_XPATH}     //button[normalize-space(text())="Sign up"]
+${SIGN_UP_HEADING_XPATH}    //h1[text()="Sign up"]
 
 
 *** Keywords ***
 I Am On The Registration Page
     [Documentation]    ...
-    ${sign_up_heading} =    Set Variable    //h1[text()="Sign up"]
-    Get Element States    ${sign_up_heading}    contains    visible
+    Get Element States    ${SIGN_UP_HEADING_XPATH}    contains    visible
 
 I Have Valid And Unique Credentials
     [Documentation]    ...
     ${user} =    Build User
-    ${user_credentials} =    Set Variable    ${EMPTY}
-    Set Test Variable    ${user_credentials}    ${user}
+    Set Test Variable    ${user}    ${user}
 
 I Fill In The Registration Form With These Credentials
     [Documentation]    ...
-    Fill All Inputs    ${user_credentials}
+    Fill All Inputs    ${user}
 
 I Submit The Form
     [Documentation]    ...
-    Click    ${SIGN_UP_BUTTON_XPATH}
+    Click Submit Button
 
 My Registration Is Successful
     [Documentation]    ...
+    Wait For Elements State    //h1[text()="Sign up"]    detached
     Get Url    equal    ${FRONT_BASE_URL}
-    Get Element States    //h1[text()="Sign up"]    contains    detached
 
 I Am Authenticated In The Application
     [Documentation]    ...
-    Get Element States    //a[@href="/editor"]    contains    visible
+    Get Element States    //a[@routerlink="/editor"]    contains    visible
 
 An Account Already Exist With A Given Username
     [Documentation]    ...
@@ -63,7 +62,7 @@ An Account Already Exist With A Given Email
 
 An Account Already Exist With A Given Username And Email
     [Documentation]    ...
-    ${user} =    Build User 
+    ${user} =    Build User
     Set Test Variable    ${user}    ${user}
     ${payload} =    Create Dictionary    user=${user}
     RequestsLibrary.POST    ${REGISTER_API_ENDPOINT}
@@ -102,6 +101,37 @@ I See The Following Error Messages
     ${expected_text} =    Catenate    SEPARATOR=\n    @{expected_messages}
     Get Text    ${error_list_locator}    equal    ${expected_text}
 
+I Fill In The Form Leaving The "${field_name}" Field Empty
+    [Documentation]    ...
+    ${user} =    Build User
+    FOR    ${key}    ${value}    IN    &{user}
+        IF    '${key}' != '${field_name}'
+            ${placeholder_name} =    Convert To Title Case    ${key}
+            Fill Text    //input[@placeholder='${placeholder_name}']    ${user}[${field_name}]
+        END
+    END
+
+The Submit Button Is Disabled
+    [Documentation]    ...
+    Get Element States    ${SIGN_UP_BUTTON_XPATH}    contains    disabled
+
+I Have Successfully Registered And I Am Authenticated
+    [Documentation]    ...
+    ${user} =    Build User
+    Set Test Variable    ${user}    ${user}
+    Fill All Inputs    ${user}
+    Click Submit Button
+    Wait For Elements State    ${SIGN_UP_HEADING_XPATH}    detached
+
+I Try To Access The Registration Page
+    [Documentation]    ...
+    Go To    ${REGISTER_PATH}
+
+Access To The Page Is Restricted For Authenticated Users
+    [Documentation]    ...
+    Wait For Elements State    ${SIGN_UP_HEADING_XPATH}    detached
+    Get Url    equal    ${FRONT_BASE_URL}
+
 #############################
 
 Initialize App Context And Open Page
@@ -120,6 +150,10 @@ Fill All Inputs
     Fill Text    //input[@placeholder="Username"]    ${user_credentials}[username]
     Fill Text    //input[@placeholder="Email"]    ${user_credentials}[email]
     Fill Text    //input[@placeholder="Password"]    ${user_credentials}[password]
+
+Click Submit Button
+    [Documentation]    ...
+    Click    ${SIGN_UP_BUTTON_XPATH}
 
 Register Heading Should Be Visible
     [Documentation]    ...
@@ -143,18 +177,6 @@ Delete Account If Exist
         ...    json=${update_payload}
         ...    headers=${headers}
         ...    expected_status=200
-    EXCEPT
-        Should Be Equal As Integers    0    0
+    EXCEPT    *    type=GLOB    AS    ${error}
+        Log    Account does not exist or user variable missing, skipping cleanup: ${error}
     END
-
-Generate Random Email
-    [Documentation]    ...
-    [Arguments]    ${email}
-    ${username}    ${domain} =    Split String    ${email}    @    max_split=1
-    ${timestamp} =    Get Time    format=epoch
-    ${random_email} =     Set Variable    deleted_${username}${timestamp}@${domain}
-    RETURN    ${random_email}
-
-Generate Random Username
-    ${timestamp} =    Get Time    format=epoch
-    RETURN    deleted_playmaker1710${timestamp}

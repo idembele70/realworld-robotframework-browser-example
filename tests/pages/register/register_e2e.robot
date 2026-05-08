@@ -1,5 +1,5 @@
 *** Settings ***
-Resource        ./register_e2e.resource
+Resource        ./register_page.resource
 
 Test Setup      Run Keywords    Initialize App Context And Open Page
 ...                 AND Go To Registration Page
@@ -50,3 +50,31 @@ Registration Fails With An Existing Username And Email
     And I See The Following Error Messages
     ...    email has already been taken
     ...    username has already been taken
+
+Attempt to register without a username
+    [Documentation]    ...
+    [Tags]    negative
+    Given I Am On The Registration Page
+    When I Fill In The Form Leaving The "username" Field Empty
+    Then The Submit Button Is Disabled
+
+Attempt to register without an email
+    [Documentation]    ...
+    Given I Am On The Registration Page
+    When I Fill In The Form Leaving The "email" Field Empty
+    Then The Submit Button Is Disabled
+
+Attempt to register Without A Password
+    [Documentation]    ...
+    [Tags]    negative
+    Given I Am On The Registration Page
+    When I Fill In The Form Leaving The "password" Field Empty
+    Then The Submit Button Is Disabled
+
+An Authenticated user cannot access the registration page
+    [Documentation]    ...
+    [Tags]    negative
+    Given I Have Successfully Registered And I Am Authenticated
+    When I Try To Access The Registration Page
+    Then Access To The Page Is Restricted For Authenticated Users
+
