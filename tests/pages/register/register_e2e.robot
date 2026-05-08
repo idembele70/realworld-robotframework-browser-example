@@ -19,7 +19,7 @@ Successful registration with valid credentials
     Then My Registration Is Successful
     And I Am Authenticated In The Application
 
-Registration fails with an existing username
+Registration Fails With An Existing Username
     [Documentation]    ...
     [Tags]    negative    fixme_prod
     Given An Account Already Exist With A Given Username
