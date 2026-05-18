@@ -77,3 +77,30 @@ An Authenticated user cannot access the registration page
     Given I Have Successfully Registered And I Am Authenticated
     When I Try To Access The Registration Page
     Then Access To The Page Is Restricted For Authenticated Users
+
+Registration With A Leading Space In The Username
+    [Documentation]    ...
+    [Tags]    edge
+    Given I Am On The Registration Page
+    And I Have Valid Credentials
+    When I Fill In The Form With A Leading Space In The Username
+    And I Submit The Form
+    Then My Registration Is Successful
+
+Registration with a leading space in the email
+    [Documentation]    ...
+    [Tags]    edge
+    Given I Am On The Registration Page
+    And I Have Valid Credentials
+    When I Fill In The Form With A Leading Space In The Email
+    And I Submit The Form
+    Then My Registration Is Successful
+
+Registration With A Leading Space In The Password
+    [Documentation]    ...
+    [Tags]    edge
+    Given I Am On The Registration Page
+    And I Have Valid Credentials
+    When I Fill In The Form With A Leading Space In The Password
+    And I Submit The Form
+    Then My Registration Is Successful
