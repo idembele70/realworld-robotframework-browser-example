@@ -87,7 +87,7 @@ Registration With A Leading Space In The Username
     And I Submit The Form
     Then My Registration Is Successful
 
-Registration with a leading space in the email
+Registration with A leading space in the email
     [Documentation]    ...
     [Tags]    edge
     Given I Am On The Registration Page
