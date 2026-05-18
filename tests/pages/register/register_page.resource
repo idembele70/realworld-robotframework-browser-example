@@ -60,7 +60,7 @@ An Account Already Exist With A Given Email
     ...    json=${payload}
     ...    expected_status=201
 
-An Account Already Exist With A Given Username And Email
+An Account Already Exists With A Given Username And Email
     [Documentation]    ...
     ${user} =    Build User
     Set Test Variable    ${user}    ${user}
@@ -160,7 +160,7 @@ Register Heading Should Be Visible
     ${heading} =    Get Element By Role    HEADING    name=Sign up    exact=True
     Get Element States    ${heading}    contains    visible
 
-Delete Account If Exist
+Delete Account If Exists
     [Documentation]    ...
     TRY
         ${payload} =    Create Dictionary    user=${user}

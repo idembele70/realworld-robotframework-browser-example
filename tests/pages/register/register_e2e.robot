@@ -3,13 +3,13 @@ Resource        ./register_page.resource
 
 Test Setup      Run Keywords    Initialize App Context And Open Page
 ...                 AND Go To Registration Page
-Test Teardown    Delete Account If Exist
+Test Teardown    Delete Account If Exists
 
 Test Tags       auth    e2e    register
 
 
 *** Test Cases ***
-Successful registration with valid credentials
+Successful Registration With Valid Credentials
     [Documentation]    ...
     [Tags]    happy    smoke
     Given I Am On The Registration Page
@@ -42,7 +42,7 @@ Registration Fails With An Existing Email
 Registration Fails With An Existing Username And Email
     [Documentation]    ...
     [Tags]    negative    fixme    wip
-    Given An Account Already Exist With A Given Username And Email
+    Given An Account Already Exists With A Given Username And Email
     And I Am On The Registration Page
     When I Fill The Form With The Same Existing Username And Email
     And I Submit The Form
@@ -77,4 +77,3 @@ An Authenticated user cannot access the registration page
     Given I Have Successfully Registered And I Am Authenticated
     When I Try To Access The Registration Page
     Then Access To The Page Is Restricted For Authenticated Users
-
