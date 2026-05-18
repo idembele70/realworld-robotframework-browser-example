@@ -5,6 +5,7 @@ Library     RequestsLibrary
 Resource    ${CURDIR}/../../config/env_config.robot
 Resource    ${CURDIR}/../../shared/utilities/api_url.utilities.resource
 Resource    ${CURDIR}/../register/register_factories.resource
+Resource    ${CURDIR}/../../shared/variables.resource
 
 
 *** Variables ***
@@ -136,7 +137,7 @@ Access To The Page Is Restricted For Authenticated Users
 
 Initialize App Context And Open Page
     [Documentation]    ...
-    New Browser    browser=chromium    headless=${False}
+    New Browser    browser=chromium    headless=${HEADLESS}
     New Context    baseURL=${FRONT_BASE_URL}
     New Page
 
