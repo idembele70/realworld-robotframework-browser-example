@@ -1,0 +1,13 @@
+*** Settings ***
+Resource    ${CURDIR}/../../config/env_config.robot
+
+
+*** Variables ***
+# USERS
+${USERS_ENDPOINT_BASE_PATH}     /users
+${REGISTER_API_ENDPOINT}        ${API_BASE_URL}${USERS_ENDPOINT_BASE_PATH}
+${LOGIN_API_ENDPOINT}           ${API_BASE_URL}${USERS_ENDPOINT_BASE_PATH}/login
+
+# USER
+${USER_ENDPOINT_BASE_PATH}      /user
+${UPDATE_USER_ENDPOINT}    ${API_BASE_URL}${USER_ENDPOINT_BASE_PATH}
