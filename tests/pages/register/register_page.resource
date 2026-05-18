@@ -1,5 +1,6 @@
 *** Settings ***
 Library     String
+Library     Collections
 Library     Browser
 Library     RequestsLibrary
 Resource    ${CURDIR}/../../config/env_config.robot
@@ -21,6 +22,11 @@ I Am On The Registration Page
     Get Element States    ${SIGN_UP_HEADING_XPATH}    contains    visible
 
 I Have Valid And Unique Credentials
+    [Documentation]    ...
+    ${user} =    Build User
+    Set Test Variable    ${user}    ${user}
+
+I Have Valid Credentials
     [Documentation]    ...
     ${user} =    Build User
     Set Test Variable    ${user}    ${user}
@@ -82,6 +88,24 @@ I Fill The Form With This Existing Email And A Non-Existing Username
 I Fill The Form With The Same Existing Username And Email
     [Documentation]    ...
     ${user} =    Build User
+    Fill All Inputs    ${user}
+
+I Fill In The Form With A Leading Space In The Username
+    [Documentation]    ...
+    ${edge_username} =    Set Variable    ${SPACE}${user}[username]
+    Set To Dictionary    ${user}    username=${edge_username}
+    Fill All Inputs    ${user}
+
+I Fill In The Form With A Leading Space In The Email
+    [Documentation]    ...
+    ${edge_email} =    Set Variable    ${SPACE}${user}[email]
+    Set To Dictionary    ${user}    email=${edge_email}
+    Fill All Inputs    ${user}
+
+I Fill In The Form With A Leading Space In The Password
+    [Documentation]    ...
+    ${edge_password} =    Set Variable    ${SPACE}${user}[password]
+    Set To Dictionary    ${user}    password=${edge_password}
     Fill All Inputs    ${user}
 
 The Registration Fails
