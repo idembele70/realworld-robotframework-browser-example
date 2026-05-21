@@ -1,10 +1,10 @@
 *** Settings ***
 Library     String
-Library     Browser
+Library     Browser    timeout=30s
 Library     RequestsLibrary
 Resource    ${CURDIR}/../../config/env_config.robot
 Resource    ${CURDIR}/../../shared/utilities/api_url.utilities.resource
-Resource    ${CURDIR}/../register/register_factories.resource
+Resource    ${CURDIR}/../../shared/factories/user_factories.resource
 Resource    ${CURDIR}/../../shared/variables.resource
 
 
@@ -23,7 +23,7 @@ I Am On The Registration Page
 
 I Have Valid And Unique Credentials
     [Documentation]    ...
-    ${user} =    Build User
+    ${user} =    Build User    prefix=register
     Set Test Variable    ${user}    ${user}
 
 I Fill In The Registration Form With These Credentials
@@ -45,25 +45,27 @@ I Am Authenticated In The Application
 
 An Account Already Exist With A Given Username
     [Documentation]    ...
-    ${user} =    Build User    email=existing_username_scenario@invalid.invalid
+    ${user} =    Build User    prefix=register    email=existing_username_scenario@invalid.invalid
     Set Test Variable    ${user}    ${user}
     ${payload} =    Create Dictionary    user=${user}
     RequestsLibrary.POST    ${REGISTER_API_ENDPOINT}
     ...    json=${payload}
     ...    expected_status=201
+    ...    verify=${False}
 
 An Account Already Exist With A Given Email
     [Documentation]    ...
-    ${user} =    Build User    username=existing_email_scenario
+    ${user} =    Build User    prefix=register    username=existing_email_scenario
     Set Test Variable    ${user}    ${user}
     ${payload} =    Create Dictionary    user=${user}
     RequestsLibrary.POST    ${REGISTER_API_ENDPOINT}
     ...    json=${payload}
     ...    expected_status=201
+    ...    verify=${False}
 
 An Account Already Exists With A Given Username And Email
     [Documentation]    ...
-    ${user} =    Build User
+    ${user} =    Build User    prefix=register
     Set Test Variable    ${user}    ${user}
     ${payload} =    Create Dictionary    user=${user}
     RequestsLibrary.POST    ${REGISTER_API_ENDPOINT}
@@ -72,17 +74,17 @@ An Account Already Exists With A Given Username And Email
 
 I Fill The Form With This Existing Username And A Non-Existing Email
     [Documentation]    ...
-    ${user} =    Build User
+    ${user} =    Build User    prefix=register
     Fill All Inputs    ${user}
 
 I Fill The Form With This Existing Email And A Non-Existing Username
     [Documentation]    ...
-    ${user} =    Build User
+    ${user} =    Build User    prefix=register
     Fill All Inputs    ${user}
 
 I Fill The Form With The Same Existing Username And Email
     [Documentation]    ...
-    ${user} =    Build User
+    ${user} =    Build User    prefix=register
     Fill All Inputs    ${user}
 
 The Registration Fails
@@ -104,7 +106,7 @@ I See The Following Error Messages
 
 I Fill In The Form Leaving The "${field_name}" Field Empty
     [Documentation]    ...
-    ${user} =    Build User
+    ${user} =    Build User    prefix=register
     FOR    ${key}    ${value}    IN    &{user}
         IF    '${key}' != '${field_name}'
             ${placeholder_name} =    Convert To Title Case    ${key}
@@ -118,7 +120,7 @@ The Submit Button Is Disabled
 
 I Have Successfully Registered And I Am Authenticated
     [Documentation]    ...
-    ${user} =    Build User
+    ${user} =    Build User    prefix=register
     Set Test Variable    ${user}    ${user}
     Fill All Inputs    ${user}
     Click Submit Button
@@ -138,7 +140,7 @@ Access To The Page Is Restricted For Authenticated Users
 Initialize App Context And Open Page
     [Documentation]    ...
     New Browser    browser=chromium    headless=${HEADLESS}
-    New Context    baseURL=${FRONT_BASE_URL}
+    New Context    baseURL=${FRONT_BASE_URL}    ignoreHTTPSErrors=${True}
     New Page
 
 Go To Registration Page

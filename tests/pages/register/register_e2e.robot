@@ -21,7 +21,7 @@ Successful Registration With Valid Credentials
 
 Registration Fails With An Existing Username
     [Documentation]    ...
-    [Tags]    negative    fixme_prod
+    [Tags]    negative    fixme
     Given An Account Already Exist With A Given Username
     And I Am On The Registration Page
     When I Fill The Form With This Existing Username And A Non-Existing Email
@@ -31,7 +31,7 @@ Registration Fails With An Existing Username
 
 Registration Fails With An Existing Email
     [Documentation]    ...
-    [Tags]    negative    fixme_prod
+    [Tags]    negative    fixme
     Given An Account Already Exist With A Given Email
     And I Am On The Registration Page
     When I Fill The Form With This Existing Email And A Non-Existing Username
