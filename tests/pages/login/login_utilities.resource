@@ -3,6 +3,7 @@ Library    Collections
 Library     RequestsLibrary
 Resource    ${CURDIR}/../../shared/factories/user_factories.resource
 Resource    ${CURDIR}/../../shared/utilities/api_url.utilities.resource
+Resource    ${CURDIR}/../../shared/variables.resource
 
 
 *** Keywords ***
@@ -13,12 +14,14 @@ Safe Create User From API
         &{payload} =    Create Dictionary    user=${user_credentials}
         Set Test Variable    ${user}    ${user_credentials}
         Set Test Variable    ${payload}    ${payload}
-        &{response} =    POST
+        ${response} =    POST
         ...    url=${REGISTER_API_ENDPOINT}
         ...    json=${payload}
-        ...    verify=${False}
-    EXCEPT
-        Log    L'utilisateur existe déjà.
+        ...    verify=${VERIFY}
+    EXCEPT    HTTPError: 422*    type=GLOB
+        Log    L'utilisateur existe déjà ou le corps de la requête est invalide.
+    ELSE
+        Log    Erreur serveur veuillez ressayer.
     END
 
 Get User Token
@@ -27,7 +30,7 @@ Get User Token
     ${response} =    POST
     ...    url=${LOGIN_API_ENDPOINT}
     ...    json=${payload}
-    ...    verify=${False}
+    ...    verify=${VERIFY}
     RETURN    ${response.json()}[user][token]
 
 Delete User If Exists From API
@@ -42,7 +45,7 @@ Delete User If Exists From API
         PUT    url=${UPDATE_USER_ENDPOINT}
         ...    json=${payload}
         ...    headers=${headers}
-        ...    verify=${False}
+        ...    verify=${VERIFY}
     EXCEPT
         Log    Utilisateur déjà absent
     END

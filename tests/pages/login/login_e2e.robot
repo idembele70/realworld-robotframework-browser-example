@@ -10,7 +10,7 @@ Test Teardown    Run Keywords    Delete User If Exists From API
 
 
 *** Test Cases ***
-Sucessfull Login With Valid Credentials
+Sucessful Login With Valid Credentials
     [Documentation]    ...
     [Tags]    happy    smoke
     Given The User Navigates To Login Page

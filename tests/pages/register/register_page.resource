@@ -51,7 +51,7 @@ An Account Already Exist With A Given Username
     RequestsLibrary.POST    ${REGISTER_API_ENDPOINT}
     ...    json=${payload}
     ...    expected_status=201
-    ...    verify=${False}
+    ...    verify=${VERIFY}
 
 An Account Already Exist With A Given Email
     [Documentation]    ...
@@ -61,7 +61,7 @@ An Account Already Exist With A Given Email
     RequestsLibrary.POST    ${REGISTER_API_ENDPOINT}
     ...    json=${payload}
     ...    expected_status=201
-    ...    verify=${False}
+    ...    verify=${VERIFY}
 
 An Account Already Exists With A Given Username And Email
     [Documentation]    ...
@@ -139,8 +139,8 @@ Access To The Page Is Restricted For Authenticated Users
 
 Initialize App Context And Open Page
     [Documentation]    ...
-    New Browser    browser=chromium    headless=${HEADLESS}
-    New Context    baseURL=${FRONT_BASE_URL}    ignoreHTTPSErrors=${True}
+    New Browser    browser=${BROWSER}    headless=${HEADLESS}
+    New Context    baseURL=${FRONT_BASE_URL}    ignoreHTTPSErrors=${IGNORE_HTTPS_ERRORS}
     New Page
 
 Go To Registration Page

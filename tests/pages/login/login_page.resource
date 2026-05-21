@@ -119,8 +119,8 @@ User Profile Should Still Be Visible
 
 Open App Page
     [Documentation]    ...
-    New Browser    browser=chromium    headless=${HEADLESS}
-    New Context    baseURL=${FRONT_BASE_URL}    ignoreHTTPSErrors=True
+    New Browser    browser=${BROWSER}    headless=${HEADLESS}
+    New Context    baseURL=${FRONT_BASE_URL}    ignoreHTTPSErrors=${IGNORE_HTTPS_ERRORS}
     New Page
 
 Go To Login Page
