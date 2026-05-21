@@ -5,10 +5,14 @@ Library     String
 *** Keywords ***
 Build User
     [Documentation]    ...
-    [Arguments]    ${username}=playmaker1712
+    [Arguments]    ${prefix}=${EMPTY}
+    ...    ${username}=playmaker1712
     ...    ${email}=playmaker1712@invalid.invalid
     ...    ${password}=Str0ngP@ssw0rd?!
-    ${user} =    Create Dictionary    username=${username}    email=${email}    password=${password}
+    IF    '${prefix}' != '${EMPTY}'
+        ${prefix} =    Set Variable    ${prefix}_
+    END
+    ${user} =    Create Dictionary    username=${prefix}${username}    email=${prefix}${email}    password=${prefix}${password}
     RETURN    ${user}
 
 Generate Random Email
