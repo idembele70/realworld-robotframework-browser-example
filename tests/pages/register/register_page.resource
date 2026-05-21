@@ -1,11 +1,11 @@
 *** Settings ***
+Library     Collections
 Library     String
-Library     Browser    timeout=30s
+Library     Browser    timeout=${TIMEOUT}
 Library     RequestsLibrary
 Resource    ${CURDIR}/../../config/env_config.robot
 Resource    ${CURDIR}/../../shared/utilities/api_url.utilities.resource
 Resource    ${CURDIR}/../../shared/factories/user_factories.resource
-Resource    ${CURDIR}/../../shared/variables.resource
 
 
 *** Variables ***

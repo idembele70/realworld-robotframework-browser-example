@@ -1,13 +1,13 @@
 *** Settings ***
-Library     Browser    timeout=30s
-Resource    ${CURDIR}/../../shared/variables.resource
+Library     Browser    timeout=${TIMEOUT}
 Resource    ${CURDIR}/../../config/env_config.robot
 
 
 *** Variables ***
-${LOGIN_PATH}               login
-${SIGN_IN_FORM_SELECTOR}    //form[//button[normalize-space()="Sign in"]]
-${PROTECTED_PAGE_PATH}      settings
+${LOGIN_PATH}                   login
+${SIGN_IN_FORM_SELECTOR}        //form[//button[normalize-space()="Sign in"]]
+${YOUR_FEED_LINK_SELECTOR}      //a[normalize-space()="Your Feed"]
+${PROTECTED_PAGE_PATH}          settings
 
 
 *** Keywords ***
@@ -85,8 +85,7 @@ The Homepage Should Be Displayed
     Current Url Should Be Homepage's
     Homepage Main Links Should Be Visible
 
-    ${your_feed_link} =    Get Element By Role    LINK    name=Your Feed
-    Get Element States    ${your_feed_link}    contains    visible
+    Get Element States    ${YOUR_FEED_LINK_SELECTOR}    contains    visible
     Get Element States    text=/\s*Global Feed\s*/    contains    visible
     Get Element States    //p[text()="Popular Tags"]    contains    visible
 
@@ -101,7 +100,7 @@ The User Logs In With Valid Credentials
 The Homepage Is Displayed
     [Documentation]    ...
     Current Url Should Be Homepage's
-    Get Element States    //a[@href="/settings" and contains(text(), "Settings")]    contains    visible
+    Get Element States    //a[contains(@href, "/settings") and contains(text(), "Settings")]    contains    visible
 
 The User Refreshes The Browser
     [Documentation]    ...
@@ -151,8 +150,7 @@ Submit Form
 
 Your Feed Link Should Be Visible
     [Documentation]    ...
-    ${your_feed_link} =    Get Element By Role    LINK    name=Your Feed
-    Get Element States    ${your_feed_link}    contains    visible
+    Get Element States    ${YOUR_FEED_LINK_SELECTOR}    contains    visible
 
 Homepage Main Links Should Be Visible
     [Documentation]    ...
