@@ -86,7 +86,7 @@ Submit Login Form With Empty Fields
 Login attempt with SQL injection input
     [Documentation]    ...
     [Tags]    negative    security    fixme
-    # the login is not rejected
+    # the login is rejected but there no verification if no injection was successfully made
     Given The User Navigates To Login Page
     When The User Enters "' OR 1=1 --" In The Email Field
     And The User Enters "' OR 1=1 --" In The Password Field
