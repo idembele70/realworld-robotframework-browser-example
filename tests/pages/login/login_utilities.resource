@@ -3,7 +3,6 @@ Library    Collections
 Library     RequestsLibrary
 Resource    ${CURDIR}/../../shared/factories/user_factories.resource
 Resource    ${CURDIR}/../../shared/utilities/api_url.utilities.resource
-Resource    ${CURDIR}/../../shared/variables.resource
 
 
 *** Keywords ***

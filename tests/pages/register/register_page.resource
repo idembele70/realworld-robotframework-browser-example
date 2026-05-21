@@ -1,7 +1,7 @@
 *** Settings ***
 Library     Collections
 Library     String
-Library     Browser    timeout=${TIMEOUT}
+Library     Browser    timeout=%{TIMEOUT=30s}
 Library     RequestsLibrary
 Resource    ${CURDIR}/../../config/env_config.robot
 Resource    ${CURDIR}/../../shared/utilities/api_url.utilities.resource

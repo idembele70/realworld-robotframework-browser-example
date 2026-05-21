@@ -53,3 +53,43 @@ Remember Authenticated Session After Refresh
     When The User Refreshes The Browser
     Then The User Should Remain Logged In
     And User Profile Should Still Be Visible
+
+Login with invalid password
+    [Documentation]    ...
+    [Tags]    negative    validation
+    Given The User Navigates To Login Page
+    When The User Enters A Valid Email
+    And The Users Enter An Invalid Password
+    And The User Clicks The Login Button
+    Then An Error Message Should Be Displayed
+    And The User Remain On The Login Page
+
+Login With Unregistered Email
+    [Documentation]    ...
+    [Tags]    negative    validation
+    Given The User Navigates To Login Page
+    When The User Enters And Unregistered Email
+    And The User Enters A Password
+    And The User Clicks The Login Button
+    Then An Authentication Error Should Be Displayed
+    And The User Should Not Be Logged In
+
+Submit Login Form With Empty Fields
+    [Documentation]    ...
+    [Tags]    negative    validation    fixme
+    # Le button est desactive quand les champs sont vide
+    Given The User Navigates To Login Page
+    When The User Clicks The Login Button Without Entering Any Data
+    Then Validation Messages Should Be Displayed For Required Fields
+    And The User Should Remain On The Login Page
+
+Login attempt with SQL injection input
+    [Documentation]    ...
+    [Tags]    negative    security    fixme
+    # the login is rejected but there no verification if no injection was successfully made
+    Given The User Navigates To Login Page
+    When The User Enters "' OR 1=1 --" In The Email Field
+    And The User Enters "' OR 1=1 --" In The Password Field
+    And The User Clicks The Login Button
+    Then The Login Attempt Should Be Rejected
+    And An Error Message Should Be Displayed
